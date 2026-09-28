@@ -1,0 +1,180 @@
+:root{
+  --bg:#07060d;
+  --card:#120f1c;
+  --line:#2a2340;
+  --pink:#ff3ea5;
+  --cyan:#00e5ff;
+  --purple:#a855f7;
+  --green:#00ff88;
+  --text:#e8e6f5;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--text);
+  min-height:100vh;padding:110px 15px 40px;
+  overflow-x:hidden;position:relative;
+}
+
+/* ===== BACKGROUND ANIME SHADOW ===== */
+.bg-layer{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.shadow-orb{
+  position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;
+  animation:float 14s ease-in-out infinite;
+}
+.orb1{width:420px;height:420px;background:var(--pink);top:-120px;left:-100px}
+.orb2{width:380px;height:380px;background:var(--cyan);bottom:-120px;right:-80px;animation-delay:-4s}
+.orb3{width:300px;height:300px;background:var(--purple);top:40%;left:50%;animation-delay:-8s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(40px,-30px) scale(1.15)}
+}
+.grid-overlay{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,62,165,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.06) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(circle at 50% 40%,#000 30%,transparent 80%);
+}
+
+/* ===== MUSIC WIDGET ===== */
+.music-widget{
+  position:fixed;top:16px;left:16px;z-index:50;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(18,15,28,.85);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:14px;
+  padding:8px 12px;box-shadow:0 0 24px rgba(255,62,165,.25);
+}
+.music-widget button{
+  width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff;font-size:14px;display:grid;place-items:center;
+  box-shadow:0 0 16px rgba(255,62,165,.6);
+  transition:transform .2s;
+}
+.music-widget button:hover{transform:scale(1.1)}
+.music-info{display:flex;flex-direction:column;gap:4px;min-width:130px}
+#musicTitle{font-size:.72rem;color:#b9b3d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.music-bar{height:4px;background:#241d38;border-radius:4px;overflow:hidden}
+.music-fill{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:width .3s}
+#musicVol{width:70px;accent-color:var(--pink)}
+
+/* ===== MONITOR WIDGET ===== */
+.monitor-widget{
+  position:fixed;top:16px;right:16px;z-index:50;
+  width:250px;background:rgba(18,15,28,.88);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:16px;
+  padding:14px;box-shadow:0 0 30px rgba(0,229,255,.2);
+}
+.mon-head{
+  display:flex;align-items:center;gap:8px;font-size:.75rem;font-weight:700;
+  letter-spacing:1.5px;color:var(--cyan);margin-bottom:10px;
+}
+.dot.live{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 10px var(--green);animation:pulse 1.2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.mon-body{display:flex;flex-direction:column;gap:6px}
+.mon-stat{
+  display:flex;justify-content:space-between;font-size:.78rem;
+  color:#b9b3d4;padding:4px 0;border-bottom:1px dashed #241d38;
+}
+.mon-stat b{color:var(--pink);font-size:.85rem}
+.mon-feed{
+  margin-top:10px;max-height:80px;overflow-y:auto;
+  font-size:.68rem;color:#7a7394;line-height:1.5;
+}
+.mon-feed div{padding:2px 0;border-left:2px solid var(--purple);padding-left:6px;margin-bottom:3px}
+
+/* ===== HERO ===== */
+.container{max-width:840px;margin:0 auto;position:relative;z-index:2}
+.hero{text-align:center;margin-bottom:34px}
+.glitch{
+  font-size:2.4rem;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--pink),var(--cyan),var(--purple));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  position:relative;
+  filter:drop-shadow(0 0 18px rgba(255,62,165,.5));
+}
+.sub{color:#9a93b8;margin-top:8px;font-size:.9rem;letter-spacing:1px}
+
+/* ===== CARDS ===== */
+.card{
+  background:linear-gradient(145deg,rgba(18,15,28,.95),rgba(26,20,40,.9));
+  border:1px solid var(--line);border-radius:18px;
+  padding:22px;margin-bottom:22px;position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:18px;padding:1px;
+  background:linear-gradient(135deg,transparent,rgba(255,62,165,.4),transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.card:hover{transform:translateY(-4px)}
+.card:hover::before{opacity:1}
+.card[data-glow="pink"]:hover{box-shadow:0 12px 40px -10px rgba(255,62,165,.55)}
+.card[data-glow="cyan"]:hover{box-shadow:0 12px 40px -10px rgba(0,229,255,.55)}
+.card[data-glow="purple"]:hover{box-shadow:0 12px 40px -10px rgba(168,85,247,.55)}
+
+.card h2{
+  font-size:1.05rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;
+  color:#fff;letter-spacing:.5px;
+}
+.ico{
+  display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  box-shadow:0 0 14px rgba(255,62,165,.5);font-size:.9rem;
+}
+
+input{
+  width:100%;padding:13px 15px;background:rgba(7,6,13,.8);
+  border:1px solid var(--line);border-radius:12px;color:#fff;
+  margin-bottom:12px;font-size:.9rem;transition:.25s;
+}
+input:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,62,165,.15)}
+
+button{
+  width:100%;padding:13px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff;font-weight:700;cursor:pointer;font-size:.92rem;
+  letter-spacing:.5px;transition:.25s;
+  box-shadow:0 6px 22px -8px rgba(255,62,165,.8);
+}
+button:hover{transform:translateY(-2px);box-shadow:0 10px 28px -8px rgba(255,62,165,1)}
+button:active{transform:translateY(0)}
+
+pre,#tiktokResult{
+  background:rgba(7,6,13,.85);padding:14px;border-radius:12px;margin-top:12px;
+  white-space:pre-wrap;word-break:break-all;font-size:.82rem;
+  color:var(--green);border:1px solid var(--line);min-height:0;
+  font-family:'JetBrains Mono',Consolas,monospace;
+}
+#tiktokResult img{max-width:100%;border-radius:12px;margin-top:10px;border:1px solid var(--line)}
+#tiktokResult a{
+  display:inline-block;margin-top:10px;margin-right:8px;padding:10px 18px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  color:#fff;text-decoration:none;border-radius:10px;font-weight:700;font-size:.85rem;
+}
+
+.foot{
+  text-align:center;color:#5e5878;font-size:.78rem;margin-top:30px;
+  letter-spacing:1px;
+}
+
+/* Scrollbar anime */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#0d0a17}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--pink),var(--purple));border-radius:8px}
+
+/* Responsive */
+@media(max-width:700px){
+  body{padding-top:160px}
+  .monitor-widget{width:calc(100% - 32px);top:auto;bottom:16px;right:16px}
+  .music-widget{left:16px;right:16px;width:calc(100% - 32px)}
+  .glitch{font-size:1.6rem}
+  }
